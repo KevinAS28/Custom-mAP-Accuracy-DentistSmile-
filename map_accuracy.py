@@ -9,13 +9,14 @@ import cv2
 
 #sumber: https://github.com/Cartucho/mAP
 
-
-
 def calculate_accuracy_map(weight_path, data_path, class_names):
     '''calculate mean average precision (mAP)'''
-    with open(weight_path, 'rb+') as weight_model:
-        weight = weight
-
+    try:
+        with open(weight_path, 'rb+') as weight_model:
+            weight = weight_model.read()
+    except:
+        print('Error')
+        
 
     """
     Calculate the AP for each class
@@ -36,7 +37,7 @@ def calculate_accuracy_map(weight_path, data_path, class_names):
             time.sleep(10**5) # Wait for the thread
             dr_file = 'temp' + "/" + class_name + "_dr.json"
             dr_data = json.load(open(dr_file))
-
+            weight.sum()
             """
             Assign detection-results to ground-truth objects
             """
@@ -165,5 +166,5 @@ def calculate_accuracy_map(weight_path, data_path, class_names):
                     # save image to output
                     # save the image with all the objects drawn to it
                     cv2.imwrite(img_cumulative_path, img_cumulative)
-            print(f'Accuracy: {class_name}: {math.sqrt(v_pos/ovmax)}')
+            print(f'Accuracy: {class_name}: {round(math.sqrt(v_pos/ovmax), 5)}')
     
